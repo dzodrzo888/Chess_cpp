@@ -16,9 +16,8 @@ public:
 
     bool isValidMove (int x, int y) const override;
 
-    void firstMove() override;
+    void firstMove();
 
-    
 };
 
 #endif

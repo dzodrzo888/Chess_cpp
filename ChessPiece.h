@@ -33,9 +33,6 @@ public:
     // Checks if move is a valid move.
     virtual bool isValidMove(int x, int y) const = 0;
 
-    //Checks if the piece has moved
-    virtual void firstMove() = 0;
-
     // Desctructor
     virtual ~ChessPiece() {}
 };
