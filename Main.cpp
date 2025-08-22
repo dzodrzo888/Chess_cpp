@@ -1,28 +1,30 @@
 #include <iostream>
 #include "Board.h"
-#include "Pawn.h"
-#include "Tower.h"
+#include "Bishop.h"
+#include "Queen.h"
 
 int main() {
     Board board;
-    
-    Pawn* pawn = new Pawn(3, 3, "white", "P");
 
-    Tower* tower = new Tower(0, 0, "white", "T");
+    Queen* queen = new Queen(2, 2, "White", "Q");
 
-    board.setPiece(3, 3, pawn);
+    Bishop* bishop = new Bishop(1, 1, "White", "B");
 
-    board.setPiece(0, 0, tower);
+    board.setPiece(1, 1, bishop);
 
-    ChessPiece* pawn_piece = board.getPiece(3, 3);
+    board.setPiece(2, 2, queen);
 
-    ChessPiece* tower_piece = board.getPiece(0, 0);
+    ChessPiece* bishop_piece = board.getPiece(1, 1);
+
+    ChessPiece* queen_piece = board.getPiece(2, 2);
 
     board.displayBoard();
 
-    board.movePiece(2, 3, pawn_piece);
+    board.movePiece(4, 4, bishop_piece);
 
-    board.movePiece(7, 0, tower_piece);
+    board.movePiece(4, 2, queen_piece);
+
+    board.movePiece(2, 4, queen_piece);
 
     board.displayBoard();
 
