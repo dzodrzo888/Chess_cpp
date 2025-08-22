@@ -14,8 +14,8 @@ public:
     // Destructor used to delete chess pieces from the heap.
     ~Board();
 
-    // Sets the piece on the board
-    void setPiece(int x, int y);
+    // Sets a chess piece to a specific part of the board
+    void setPiece(int x, int y, ChessPiece* piece);
 
     // Gets the piece
     ChessPiece* getPiece(int x, int y);
@@ -28,6 +28,9 @@ public:
 
     // Displays the board.
     void displayBoard();
+
+    // Populates the board with pieces
+    void populateBoard();
 
 };
 

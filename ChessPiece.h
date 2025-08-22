@@ -4,24 +4,40 @@
 #include <string> 
 
 class ChessPiece {
-private:
+protected:
     int x;
     int y;
     std::string color;
+    std::string name;
+    bool hasMoved = false;
 
 public:
     // Constructor used to initialize the ChessPiece with its coordinates.
-    ChessPiece(int x, int y) : x(x), y(y) {}
+    ChessPiece(int x, int y, std::string c, std::string n) : x(x), y(y), color(c), name(n) {}
 
     // Sets pieces coordinates
-    virtual void setPieceCoordinates(int x, int y);
+    void setPieceCoordinates(int x, int y) {
+        this->x = x;
+        this->y = y;
+    };
+
     // Gets pieces coordinates
-    std::pair<int, int> getCoordinates(int x, int y) {
+    std::pair<int, int> getCoordinates() {
         return {this->x, this->y};
     };
+
+    std::string getName() {
+        return this->name;
+    }
+
     // Checks if move is a valid move.
     virtual bool isValidMove(int x, int y) const = 0;
 
+    //Checks if the piece has moved
+    virtual void firstMove() = 0;
+
+    // Desctructor
+    virtual ~ChessPiece() {}
 };
 
 #endif 
