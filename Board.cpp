@@ -11,6 +11,8 @@
 
 void Board::displayBoard() {
 
+    std::cout << "\n";
+
     // Display each part of the board.
     for (int i = 0; i < 8; i++) {
 
@@ -25,10 +27,18 @@ void Board::displayBoard() {
         }
         std::cout << std::endl;
     }
+
+    std::cout << "\n";
 }
 
 void Board::movePiece(int x, int y, ChessPiece* piece) {
-        
+    
+    if (board[x][y] != nullptr) {
+
+        std::cout << "Piece taken!" << "\n";
+    
+    }
+
     std::pair<int, int> coords = piece->getCoordinates();
 
     deletePiece(coords.first, coords.second);
@@ -85,6 +95,75 @@ void Board::populateBoard(std::string color) {
         Pawn* pawn = new Pawn(pawn_piece_block, j, color, "P");
         setPiece(pawn_piece_block, j, pawn);
     }
+}
+
+bool Board::isPieceInWayStraight(int xStart, int yStart, int xEnd, int yEnd) {
+    int dx = (xEnd > xStart) ? 1 : (xEnd < xStart ? -1 : 0);
+    int dy = (yEnd > yStart) ? 1 : (yEnd < yStart ? -1 : 0);
+
+    int cx = xStart;
+    int cy = yStart;
+
+    while(cx != xEnd || cy != yEnd) {
+        cx += dx;
+        cy += dy;
+
+        ChessPiece* piece = getPiece(cx, cy);
+
+        if (piece != nullptr) {
+
+            std::cout << "Piece is in the way!" << "\n";
+
+            return false;
+        }
+    }
+    return true;
+}
+
+bool Board::isPieceInWayDiagonal(int xStart, int yStart, int xEnd, int yEnd) {
+    int dx = (xEnd > xStart) ? 1 : -1;
+    int dy = (yEnd > yStart) ? 1 : -1;
+
+    int cx = xStart;
+    int cy = yStart;
+
+    while(cx != xEnd && cy != yEnd) {
+        cx += dx;
+        cy += dy;
+
+        ChessPiece* piece = getPiece(cx, cy);
+
+        if (piece != nullptr) {
+
+            std::cout << "Piece is in the way!" << "\n";
+
+            return false;
+        }
+    }
+    return true;
+}
+
+bool Board::isPathClear(int xStart, int yStart, int xEnd, int yEnd, ChessPiece* piece) {
+    bool pieceInWayStraight;
+    bool pieceInWayDiagonal;
+    bool result;
+
+    if (piece->getName() == "T" || piece->getName() == "P") {
+        pieceInWayStraight = isPieceInWayStraight(xStart, yStart, xEnd, yEnd);
+        return pieceInWayStraight;
+    } else if (piece->getName() == "B") {
+        pieceInWayDiagonal = isPieceInWayDiagonal(xStart, yStart, xEnd, yEnd);
+        return pieceInWayDiagonal;
+    } else if (piece->getName() == "Q") {
+        pieceInWayStraight = isPieceInWayStraight(xStart, yStart, xEnd, yEnd);
+        pieceInWayDiagonal = isPieceInWayDiagonal(xStart, yStart, xEnd, yEnd);
+
+        result = pieceInWayStraight || pieceInWayDiagonal;
+
+        return result;
+    }
+
+    return true;
 }
 
 Board::~Board() {

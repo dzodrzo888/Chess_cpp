@@ -4,6 +4,8 @@
 #include <string>
 #include "ChessPiece.h"
 
+class ChessPiece;
+
 class Board {
 private:
     // Board array definition. Might need changes.
@@ -32,6 +34,11 @@ public:
     // Populates the board with pieces
     void populateBoard(std::string color);
 
+    bool isPieceInWayStraight(int xStart, int yStart, int xEnd, int yEnd);
+
+    bool isPieceInWayDiagonal(int xStart, int yStart, int xEnd, int yEnd);
+
+    bool isPathClear(int xStart, int yStart, int xEnd, int yEnd, ChessPiece* piece);
 };
 
 #endif

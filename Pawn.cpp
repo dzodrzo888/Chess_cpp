@@ -11,10 +11,10 @@ bool Pawn::isValidMove(int x, int y) const {
 
     if (this->color == "black") {
 
-        if (!hasMoved && dx == 2) return true;
-        if (dx == 1) return true;
+    if (!hasMoved && dx == 2) return true;
+    if (dx == 1) return true;
     } else {
-
+    
         if (!hasMoved && dx == -2) return true;
         if (dx == -1) return true;
     }

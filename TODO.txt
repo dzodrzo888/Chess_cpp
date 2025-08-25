@@ -1,2 +1,3 @@
--[] Create a chesspiece abstract cls
+-[X] Create a chesspiece abstract cls
+-[] Make it so pawns can take the correct way
 -[] Add enpeasent

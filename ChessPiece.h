@@ -2,6 +2,7 @@
 #define CHESSPIECE_H
 #include <utility>
 #include <string> 
+#include <iostream>
 
 class ChessPiece {
 protected:

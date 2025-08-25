@@ -43,6 +43,8 @@ int main() {
 
             piece = board.getPiece(x1, y1);
 
+            std::cout << "\n";
+
             if (piece == nullptr) {
                 std::cout << "No Piece in this location please choose a valid peace!" << "\n";
                 continue;
@@ -55,13 +57,17 @@ int main() {
 
             isValid = piece->isValidMove(x2, y2);
 
-            if (isValid) {
-                std::cout << "Move sucessful!" << "\n";
-                break;
-            } else {
+            if (!isValid) {
                 std::cout <<"Move not valid!" << "\n";
-            }
+                continue;
+            } 
 
+            bool path_clear = board.isPathClear(x1, y1, x2, y2, piece);
+
+            if (path_clear) {
+                std::cout << "Move valid and done!" << "\n";
+                break;
+            } 
         }
 
         board.movePiece(x2, y2, piece);
