@@ -1,5 +1,11 @@
 #include "Board.h"
 #include "ChessPiece.h"
+#include "Tower.h"
+#include "Knight.h"
+#include "Bishop.h"
+#include "Queen.h"
+#include "King.h"
+#include "Pawn.h"
 #include <iostream>
 #include <string>
 
@@ -22,22 +28,15 @@ void Board::displayBoard() {
 }
 
 void Board::movePiece(int x, int y, ChessPiece* piece) {
-    bool isValidMove;
+        
+    std::pair<int, int> coords = piece->getCoordinates();
 
-    isValidMove = piece->isValidMove(x, y);
+    deletePiece(coords.first, coords.second);
 
-    if (isValidMove) {
-        std::pair<int, int> coords = piece->getCoordinates();
+    piece->setPieceCoordinates(x, y);
 
-        deletePiece(coords.first, coords.second);
+    this->board[x][y] = piece;
 
-        piece->setPieceCoordinates(x, y);
-
-        this->board[x][y] = piece;
-
-    } else {
-        std::cout << "Invalid move! Please choose a valid move!" << "\n";
-    }
 }
 
 void Board::deletePiece(int x, int y) {
@@ -45,11 +44,47 @@ void Board::deletePiece(int x, int y) {
 }
 
 ChessPiece* Board::getPiece(int x, int y) {
+
     return this->board[x][y];
 }
 
 void Board::setPiece(int x, int y, ChessPiece* piece) {
     this->board[x][y] = piece;
+}
+
+void Board::populateBoard(std::string color) {
+    // This function fucking sucks maybe try using a switch statements plus dict like struct
+    int non_pawn_piece_block = 0;
+    int pawn_piece_block = 1;
+
+    if (color == "white") {
+        non_pawn_piece_block = 7;
+        pawn_piece_block = 6;
+    }
+
+    for (int j = 0; j < 8; j++) {
+        if ((j == 0 || j == 7)) {
+            Tower* tower = new Tower(non_pawn_piece_block, j, color, "T");
+            setPiece(non_pawn_piece_block, j, tower);
+        } else if ((j == 1 || j == 6)) {
+            Knight* knight = new Knight(non_pawn_piece_block, j, color, "N");
+            setPiece(non_pawn_piece_block, j, knight);
+        } else if ((j == 2 || j == 5)) {
+            Bishop* bishop = new Bishop(non_pawn_piece_block, j, color, "B");
+            setPiece(non_pawn_piece_block, j, bishop);
+        } else if (j == 3) {
+            Queen* queen = new Queen(non_pawn_piece_block, j, color, "Q");
+            setPiece(non_pawn_piece_block, j , queen);
+        } else if (j == 4) {
+            King* king = new King(non_pawn_piece_block ,j, color, "K");
+            setPiece(non_pawn_piece_block, j ,king);
+        }
+    }
+
+    for (int j = 0; j < 8; j++) {
+        Pawn* pawn = new Pawn(pawn_piece_block, j, color, "P");
+        setPiece(pawn_piece_block, j, pawn);
+    }
 }
 
 Board::~Board() {

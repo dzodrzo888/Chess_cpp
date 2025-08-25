@@ -4,20 +4,24 @@
 
 bool Pawn::isValidMove(int x, int y) const {
 
-    // Sets if the piece can move forward for white.
-    bool x_axis_move_bool = std::abs(this->x - x) == allowedSquares;
+    int dx = x - this->x;
+    int dy = y - this->y;
 
-    if (!this->hasMoved && !x_axis_move_bool) {
-        x_axis_move_bool = std::abs(this->x - x) + 1 == allowedSquares;
+    if (dy != 0) return false;
+
+    if (this->color == "black") {
+
+        if (!hasMoved && dx == 2) return true;
+        if (dx == 1) return true;
+    } else {
+
+        if (!hasMoved && dx == -2) return true;
+        if (dx == -1) return true;
     }
 
-    if (this->y == y && x_axis_move_bool) {
-        return true;
-    }
     return false;
 }
 
 void Pawn::firstMove() {
     this->hasMoved = true;
-    this->allowedSquares = 1;
 }

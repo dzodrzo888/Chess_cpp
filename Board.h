@@ -30,7 +30,7 @@ public:
     void displayBoard();
 
     // Populates the board with pieces
-    void populateBoard();
+    void populateBoard(std::string color);
 
 };
 

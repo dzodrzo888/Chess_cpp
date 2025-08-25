@@ -30,6 +30,10 @@ public:
         return this->name;
     }
 
+    std::string getColor() {
+        return this->color;
+    }
+
     // Checks if move is a valid move.
     virtual bool isValidMove(int x, int y) const = 0;
 
