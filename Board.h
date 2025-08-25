@@ -34,9 +34,9 @@ public:
     // Populates the board with pieces
     void populateBoard(std::string color);
 
-    bool isPieceInWayStraight(int xStart, int yStart, int xEnd, int yEnd);
+    bool isPieceInWayStraight(int xStart, int yStart, int xEnd, int yEnd, ChessPiece* piece);
 
-    bool isPieceInWayDiagonal(int xStart, int yStart, int xEnd, int yEnd);
+    bool isPieceInWayDiagonal(int xStart, int yStart, int xEnd, int yEnd, ChessPiece* piece);
 
     bool isPathClear(int xStart, int yStart, int xEnd, int yEnd, ChessPiece* piece);
 };
