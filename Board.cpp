@@ -6,6 +6,7 @@
 #include "Queen.h"
 #include "King.h"
 #include "Pawn.h"
+#include "Player.h"
 #include <iostream>
 #include <string>
 
@@ -31,26 +32,41 @@ void Board::displayBoard() {
     std::cout << "\n";
 }
 
-void Board::movePiece(int x, int y, ChessPiece* piece) {
+void Board::takePiece(int x, int y, Player* player1, Player* player2) {
     
+    ChessPiece* piece = board[x][y];
+    if (!piece) return;
+
+    Player* playerToGivePiece = (player1->getColor() == piece->getColor()) ? player1 : player2;
+
+    Player* playerToTakePiece = (player1->getColor() != piece->getColor()) ? player1 : player2;
+
+    playerToGivePiece->removeActivePiece(piece->getName());
+
+    playerToTakePiece->addCapturedPiece(piece->getName());
+
+    this->board[x][y] = nullptr;
+    
+    std::cout << "Piece deleted succesfully" << "\n";
+
+}
+
+void Board::movePiece(int x, int y, ChessPiece* piece, Player* player1, Player* player2) {
+    
+    std::pair<int, int> coords = piece->getCoordinates();
+
     if (board[x][y] != nullptr) {
 
-        std::cout << "Piece taken!" << "\n";
+        takePiece(x, y, player1, player2);
     
     }
 
-    std::pair<int, int> coords = piece->getCoordinates();
-
-    deletePiece(coords.first, coords.second);
+    this->board[coords.first][coords.second] = nullptr;
 
     piece->setPieceCoordinates(x, y);
 
     this->board[x][y] = piece;
 
-}
-
-void Board::deletePiece(int x, int y) {
-    this->board[x][y] = nullptr;
 }
 
 ChessPiece* Board::getPiece(int x, int y) {
@@ -179,8 +195,8 @@ Board::~Board() {
 
             // Only delete if board[i][j] is a ChessPiece pointer, not "."
             if (this->board[i][j] != nullptr) {
-
             delete this->board[i][j];
+            board[i][j] = nullptr;
             }
         }
     }

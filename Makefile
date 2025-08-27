@@ -6,7 +6,7 @@ CXXFLAGS = -std=c++17 -Wall
 TARGET = program
 
 # Source files
-SRC = Main.cpp Board.cpp Pawn.cpp King.cpp Queen.cpp Bishop.cpp Knight.cpp Tower.cpp
+SRC = Main.cpp Board.cpp Pawn.cpp King.cpp Queen.cpp Bishop.cpp Knight.cpp Tower.cpp Player.cpp
 
 # Object files (replace .cpp with .o)
 OBJ = $(SRC:.cpp=.o)

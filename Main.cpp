@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include "Board.h"
+#include "Player.h"
 
 int main() {
     Board board;
@@ -13,6 +14,10 @@ int main() {
     int y2;
     ChessPiece* piece;
     bool isValid;
+
+    Player* player1 = new Player("white");
+
+    Player* player2 = new Player("black");
 
     board.populateBoard("black");
 
@@ -70,12 +75,11 @@ int main() {
             } 
         }
 
-        board.movePiece(x2, y2, piece);
+        board.movePiece(x2, y2, piece, player1, player2);
 
         board.displayBoard();
 
         playerturn = !playerturn;
-
     }
 
     return 0;

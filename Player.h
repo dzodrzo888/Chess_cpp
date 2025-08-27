@@ -6,27 +6,16 @@
 class Player {
 private:
     std::string color;
-    int playerNum;
     std::vector<char> piecesTaken;
     std::vector<char> piecesRemaining = {
         'R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'
     };
 
 public:
-    void setColor(std::string color) {
-        this->color = color;
-    }
-
-    void setPlayerNum(int playerNum) {
-        this->playerNum = playerNum;
-    }
+    Player(std::string c) : color(c) {};
 
     std::string getColor() {
         return this->color;
-    }
-
-    int getPlayerNum() {
-        return this->playerNum;
     }
 
     std::vector<char> getPiecesTaken() {
@@ -37,9 +26,9 @@ public:
         return this->piecesRemaining;
     }
 
-    void deletePiece(char piece);
+    void removeActivePiece(char piece);
 
-    void pushPiece(char piece);
+    void addCapturedPiece(char piece);
 
 };
 

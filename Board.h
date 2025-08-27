@@ -3,6 +3,7 @@
 #define BOARD_H
 #include <string>
 #include "ChessPiece.h"
+#include "Player.h"
 
 class ChessPiece;
 
@@ -23,10 +24,7 @@ public:
     ChessPiece* getPiece(int x, int y);
 
     // Moves the piece on the board.
-    void movePiece(int x, int y, ChessPiece* piece);
-
-    // Deletes the piece from the board.
-    void deletePiece(int x, int y);
+    void movePiece(int x, int y, ChessPiece* piece, Player* player1, Player* player2);
 
     // Displays the board.
     void displayBoard();
@@ -39,6 +37,8 @@ public:
     bool isPieceInWayDiagonal(int xStart, int yStart, int xEnd, int yEnd, ChessPiece* piece);
 
     bool isPathClear(int xStart, int yStart, int xEnd, int yEnd, ChessPiece* piece);
+
+    void takePiece(int x, int y, Player* player1, Player* player2);
 };
 
 #endif
