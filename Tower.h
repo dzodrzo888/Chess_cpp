@@ -6,7 +6,7 @@
 class Tower : public ChessPiece {
 
 public:
-    Tower(int x, int y, std::string c, std::string n) : ChessPiece(x, y, c, n) {}
+    Tower(int x, int y, std::string c, char n) : ChessPiece(x, y, c, n) {}
 
     bool isValidMove(int x, int y) const override;
 

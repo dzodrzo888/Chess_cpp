@@ -74,25 +74,25 @@ void Board::populateBoard(std::string color) {
 
     for (int j = 0; j < 8; j++) {
         if ((j == 0 || j == 7)) {
-            Tower* tower = new Tower(non_pawn_piece_block, j, color, "T");
+            Tower* tower = new Tower(non_pawn_piece_block, j, color, 'R');
             setPiece(non_pawn_piece_block, j, tower);
         } else if ((j == 1 || j == 6)) {
-            Knight* knight = new Knight(non_pawn_piece_block, j, color, "N");
+            Knight* knight = new Knight(non_pawn_piece_block, j, color, 'N');
             setPiece(non_pawn_piece_block, j, knight);
         } else if ((j == 2 || j == 5)) {
-            Bishop* bishop = new Bishop(non_pawn_piece_block, j, color, "B");
+            Bishop* bishop = new Bishop(non_pawn_piece_block, j, color, 'B');
             setPiece(non_pawn_piece_block, j, bishop);
         } else if (j == 3) {
-            Queen* queen = new Queen(non_pawn_piece_block, j, color, "Q");
+            Queen* queen = new Queen(non_pawn_piece_block, j, color, 'Q');
             setPiece(non_pawn_piece_block, j , queen);
         } else if (j == 4) {
-            King* king = new King(non_pawn_piece_block ,j, color, "K");
+            King* king = new King(non_pawn_piece_block ,j, color, 'K');
             setPiece(non_pawn_piece_block, j ,king);
         }
     }
 
     for (int j = 0; j < 8; j++) {
-        Pawn* pawn = new Pawn(pawn_piece_block, j, color, "P");
+        Pawn* pawn = new Pawn(pawn_piece_block, j, color, 'P');
         setPiece(pawn_piece_block, j, pawn);
     }
 }
@@ -148,13 +148,13 @@ bool Board::isPathClear(int xStart, int yStart, int xEnd, int yEnd, ChessPiece* 
     bool pieceInWayDiagonal;
     bool result;
 
-    if (piece->getName() == "T" || piece->getName() == "P") {
+    if (piece->getName() == 'T' || piece->getName() == 'P') {
         pieceInWayStraight = isPieceInWayStraight(xStart, yStart, xEnd, yEnd, piece);
         return pieceInWayStraight;
-    } else if (piece->getName() == "B") {
+    } else if (piece->getName() == 'B') {
         pieceInWayDiagonal = isPieceInWayDiagonal(xStart, yStart, xEnd, yEnd, piece);
         return pieceInWayDiagonal;
-    } else if (piece->getName() == "Q") {
+    } else if (piece->getName() == 'Q') {
         pieceInWayStraight = isPieceInWayStraight(xStart, yStart, xEnd, yEnd, piece);
         pieceInWayDiagonal = isPieceInWayDiagonal(xStart, yStart, xEnd, yEnd, piece);
 

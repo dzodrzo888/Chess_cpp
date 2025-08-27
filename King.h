@@ -6,7 +6,7 @@
 class King : public ChessPiece {
 
 public:
-    King(int x, int y, std::string c, std::string n) : ChessPiece(x, y, c, n) {}
+    King(int x, int y, std::string c, char n) : ChessPiece(x, y, c, n) {}
 
     bool isValidMove(int x, int y) const override;
 

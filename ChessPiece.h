@@ -9,12 +9,12 @@ protected:
     int x;
     int y;
     std::string color;
-    std::string name;
+    char name;
     bool hasMoved = false;
 
 public:
     // Constructor used to initialize the ChessPiece with its coordinates.
-    ChessPiece(int x, int y, std::string c, std::string n) : x(x), y(y), color(c), name(n) {}
+    ChessPiece(int x, int y, std::string c, char n) : x(x), y(y), color(c), name(n) {}
 
     // Sets pieces coordinates
     void setPieceCoordinates(int x, int y) {
@@ -27,7 +27,7 @@ public:
         return {this->x, this->y};
     };
 
-    std::string getName() {
+    char getName() {
         return this->name;
     }
 
