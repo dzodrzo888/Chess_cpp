@@ -105,17 +105,21 @@ bool Board::isPieceInWayStraight(int xStart, int yStart, int xEnd, int yEnd, Che
     int cy = yStart;
 
     while(cx != xEnd || cy != yEnd) {
+
         cx += dx;
         cy += dy;
 
         ChessPiece* curr_square_piece = getPiece(cx, cy);
 
-        if (curr_square_piece != nullptr && curr_square_piece->getColor() == piece->getColor()) {
+        if (curr_square_piece != nullptr) {
+
+            if (cx == xEnd && cy == yEnd && curr_square_piece->getColor() != piece->getColor()) continue;
 
             std::cout << "Piece is in the way!" << "\n";
 
             return false;
         }
+
     }
     return true;
 }
@@ -128,12 +132,15 @@ bool Board::isPieceInWayDiagonal(int xStart, int yStart, int xEnd, int yEnd, Che
     int cy = yStart;
 
     while(cx != xEnd && cy != yEnd) {
+
         cx += dx;
         cy += dy;
 
         ChessPiece* curr_square_piece = getPiece(cx, cy);
 
-        if (curr_square_piece != nullptr && curr_square_piece->getColor() == piece->getColor()) {
+        if (curr_square_piece != nullptr) {
+
+            if (cx == xEnd && cy == yEnd && curr_square_piece->getColor() != piece->getColor()) continue;
 
             std::cout << "Piece is in the way!" << "\n";
 
@@ -148,7 +155,7 @@ bool Board::isPathClear(int xStart, int yStart, int xEnd, int yEnd, ChessPiece* 
     bool pieceInWayDiagonal;
     bool result;
 
-    if (piece->getName() == 'T' || piece->getName() == 'P') {
+    if (piece->getName() == 'R' || piece->getName() == 'P') {
         pieceInWayStraight = isPieceInWayStraight(xStart, yStart, xEnd, yEnd, piece);
         return pieceInWayStraight;
     } else if (piece->getName() == 'B') {
