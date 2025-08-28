@@ -1,5 +1,7 @@
 -[X] Create a chesspiece abstract cls
 -[] Make it so pawns can take the correct way
 -[] Add enpeasent
--[] Add players class 
+-[X] Add players class 
 -[] Create a game class so we can clear up main
+-[] Change so it uses unique_ptr and move semantics
+-[] Add checks and checkmates

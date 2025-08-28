@@ -39,7 +39,7 @@ public:
     virtual bool isValidMove(int x, int y) const = 0;
 
     // Desctructor
-    virtual ~ChessPiece() {}
+    virtual ~ChessPiece() = default;
 };
 
 #endif 

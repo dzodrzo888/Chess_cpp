@@ -82,5 +82,8 @@ int main() {
         playerturn = !playerturn;
     }
 
+    delete player1;
+    delete player2;
+
     return 0;
 }

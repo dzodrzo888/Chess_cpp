@@ -3,7 +3,7 @@
 #include "Pawn.h"
 
 bool Pawn::isValidMove(int x, int y) const {
-
+    if (x < 0 || x >= 8 || y < 0 || y >= 8) return false;
     int dx = x - this->x;
     int dy = y - this->y;
 

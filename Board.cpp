@@ -45,6 +45,7 @@ void Board::takePiece(int x, int y, Player* player1, Player* player2) {
 
     playerToTakePiece->addCapturedPiece(piece->getName());
 
+    delete piece;
     this->board[x][y] = nullptr;
     
     std::cout << "Piece deleted succesfully" << "\n";
@@ -65,7 +66,7 @@ void Board::movePiece(int x, int y, ChessPiece* piece, Player* player1, Player* 
 
     piece->setPieceCoordinates(x, y);
 
-    this->board[x][y] = piece;
+    setPiece(x, y, piece);
 
 }
 
@@ -79,38 +80,40 @@ void Board::setPiece(int x, int y, ChessPiece* piece) {
 }
 
 void Board::populateBoard(std::string color) {
-    // This function fucking sucks maybe try using a switch statements plus dict like struct
-    int non_pawn_piece_block = 0;
-    int pawn_piece_block = 1;
-
-    if (color == "white") {
-        non_pawn_piece_block = 7;
-        pawn_piece_block = 6;
-    }
+    
+    int back_rank = (color == "white") ? 7 : 0;
+    int pawn_rank = (color == "white") ? 6 : 1;
 
     for (int j = 0; j < 8; j++) {
-        if ((j == 0 || j == 7)) {
-            Tower* tower = new Tower(non_pawn_piece_block, j, color, 'R');
-            setPiece(non_pawn_piece_block, j, tower);
-        } else if ((j == 1 || j == 6)) {
-            Knight* knight = new Knight(non_pawn_piece_block, j, color, 'N');
-            setPiece(non_pawn_piece_block, j, knight);
-        } else if ((j == 2 || j == 5)) {
-            Bishop* bishop = new Bishop(non_pawn_piece_block, j, color, 'B');
-            setPiece(non_pawn_piece_block, j, bishop);
-        } else if (j == 3) {
-            Queen* queen = new Queen(non_pawn_piece_block, j, color, 'Q');
-            setPiece(non_pawn_piece_block, j , queen);
-        } else if (j == 4) {
-            King* king = new King(non_pawn_piece_block ,j, color, 'K');
-            setPiece(non_pawn_piece_block, j ,king);
+        ChessPiece* piece = nullptr;
+        switch(j) {
+            case 0:
+            case 7:
+                piece = new Tower(back_rank, j, color, 'R');
+                break;
+            case 1:
+            case 6:
+                piece = new Knight(back_rank, j, color, 'N');
+                break;
+            case 2:
+            case 5:
+                piece = new Bishop(back_rank, j, color, 'B');
+                break;
+            case 3:
+                piece = new Queen(back_rank, j, color, 'Q');
+                break;
+            case 4:
+                piece = new King(back_rank ,j, color, 'K');
+                break;
         }
+        setPiece(back_rank, j, piece);
     }
 
     for (int j = 0; j < 8; j++) {
-        Pawn* pawn = new Pawn(pawn_piece_block, j, color, 'P');
-        setPiece(pawn_piece_block, j, pawn);
+        Pawn* pawn = new Pawn(pawn_rank, j, color, 'P');
+        setPiece(pawn_rank, j, pawn);
     }
+
 }
 
 bool Board::isPieceInWayStraight(int xStart, int yStart, int xEnd, int yEnd, ChessPiece* piece) {
@@ -190,9 +193,8 @@ bool Board::isPathClear(int xStart, int yStart, int xEnd, int yEnd, ChessPiece* 
 }
 
 Board::~Board() {
-    for (int i =0; i < 8; i++) {
+    for (int i = 0; i < 8; i++) {
         for (int j = 0; j < 8; j++) {
-
             // Only delete if board[i][j] is a ChessPiece pointer, not "."
             if (this->board[i][j] != nullptr) {
             delete this->board[i][j];
