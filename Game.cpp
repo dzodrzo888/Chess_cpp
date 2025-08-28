@@ -60,9 +60,11 @@ void Game::displayGameState() {
 void Game::processMove() {
     while (true) {
         std::string move;
+        std::string curr_oponent_color = (isWhiteTurn) ? "black" : "white";
+        std::string curr_color = (isWhiteTurn) ? "white" : "black";
 
         if (this->isWhiteTurn) {
-        std::cout << "Whites turn!" << "\n";
+            std::cout << "Whites turn!" << "\n";
         } else {
             std::cout << "Blacks turn!" << "\n";
         }
@@ -86,11 +88,22 @@ void Game::processMove() {
         if (moveValid) {
             
             board.movePiece(x2, y2, piece, player1, player2);
-            
+
+            if (board.checkIfInCheck(curr_color)) {
+                
+                std::cout << "Cannot move there! Your king would be in check!" << "\n";
+                board.movePiece(x1, y1, piece, player1, player2);
+                continue;
+            }
+
+            board.setInCheck("");
+
+            board.checkIfInCheck(curr_oponent_color);
+            std::cout << "This colour is in check: " << board.getInCheck() << "\n";
             displayGameState();
 
             changeTurn();
-            
+
             break;
         }
     }
@@ -133,7 +146,6 @@ bool Game::validateMove(int x1, int y1, int x2, int y2, ChessPiece* piece) {
 }
 
 void Game::isGameOver() {
-    std::cout << "Winner of this game is: " << this->winner << "\n";
 
     delete player1;
     delete player2;

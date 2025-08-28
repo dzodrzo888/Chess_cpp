@@ -11,7 +11,6 @@ private:
     Player* player2;
     bool isWhiteTurn;
     bool gameOver;
-    std::string winner;
 
 public:
     Game(bool iWT, bool gO) : isWhiteTurn(iWT), gameOver(gO) {}

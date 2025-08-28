@@ -2,6 +2,8 @@
 #ifndef BOARD_H
 #define BOARD_H
 #include <string>
+#include <map>
+#include <utility>
 #include "ChessPiece.h"
 #include "Player.h"
 
@@ -11,6 +13,8 @@ class Board {
 private:
     // Board array definition. Might need changes.
     ChessPiece* board[8][8] = {nullptr};
+    std::map <std::string, std::pair<int, int>> chessPiecesCords;
+    std::string isInCheck = "";
 
 public:
 
@@ -41,6 +45,16 @@ public:
     void takePiece(int x, int y, Player* player1, Player* player2);
 
     bool isMoveDiagonal(int xStart, int yStart, int xEnd, int yEnd); 
+
+    void mapChessPiece(int x, int y, std::string piece);
+
+    std::pair<int, int> getPieceCords(std::string piece);
+
+    bool checkIfInCheck(std::string color);
+
+    void setInCheck(std::string color);
+
+    std::string getInCheck();
 };
 
 #endif

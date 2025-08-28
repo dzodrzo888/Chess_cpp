@@ -3,7 +3,7 @@
 
 int main() {
     Game game(true, false);
-
+    std::cout << "Game initialized" << "\n";
     game.initializeGame();
 
     game.startGame();

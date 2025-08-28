@@ -68,6 +68,10 @@ void Board::movePiece(int x, int y, ChessPiece* piece, Player* player1, Player* 
 
     setPiece(x, y, piece);
 
+    std::string dictName = std::string(1, piece->getName()) + "_" + piece->getColor();
+
+    mapChessPiece(x, y, dictName);
+
 }
 
 ChessPiece* Board::getPiece(int x, int y) {
@@ -77,6 +81,14 @@ ChessPiece* Board::getPiece(int x, int y) {
 
 void Board::setPiece(int x, int y, ChessPiece* piece) {
     this->board[x][y] = piece;
+}
+
+void Board::mapChessPiece(int x, int y, std::string piece) {
+    chessPiecesCords[piece] = {x, y};
+}
+
+std::pair<int, int> Board::getPieceCords(std::string piece) {
+    return this->chessPiecesCords[piece];
 }
 
 void Board::populateBoard(std::string color) {
@@ -107,11 +119,19 @@ void Board::populateBoard(std::string color) {
                 break;
         }
         setPiece(back_rank, j, piece);
+        
+        std::string dictName = std::string(1, piece->getName()) + "_" + piece->getColor();
+
+        mapChessPiece(back_rank, j, dictName);
     }
 
     for (int j = 0; j < 8; j++) {
         Pawn* pawn = new Pawn(pawn_rank, j, color, 'P');
         setPiece(pawn_rank, j, pawn);
+
+        std::string dictName = std::string(1, pawn->getName()) + "_" + pawn->getColor();
+
+        mapChessPiece(pawn_rank, j, dictName);
     }
 
 }
@@ -185,6 +205,74 @@ bool Board::isPathClear(int xStart, int yStart, int xEnd, int yEnd, ChessPiece* 
                                       isPieceInWayStraight(xStart, yStart, xEnd, yEnd, piece);
 
     return pathClear;
+}
+
+void Board::setInCheck(std::string color) {
+    this->isInCheck = color;
+}
+
+std::string Board::getInCheck() {
+    return this->isInCheck;
+}
+
+bool Board::checkIfInCheck(std::string color) {
+
+    std::string dictName = "K_" + color;
+
+    std::pair<int, int> king_cords = getPieceCords(dictName);
+
+    std::vector<std::pair<int, int>> posbDiagonalCords = {{1, 1}, {-1, -1}, {-1, 1}, {1, -1}};
+
+    std::vector<std::pair<int, int>> posbStraightCords = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
+
+    for (auto cords: posbDiagonalCords) {
+        int cx = king_cords.first;
+        int cy = king_cords.second;
+
+        while ((cx < 7 && cx > 0) && (cy < 7 && cy > 0)) {
+            cx += cords.first;
+            cy += cords.second;
+
+            ChessPiece* curr_square_piece = getPiece(cx, cy);
+
+            if (curr_square_piece == nullptr) continue;
+
+            if (curr_square_piece->getColor() == color) break;
+
+            if (curr_square_piece->isValidMove(king_cords.first, king_cords.second)) {
+
+                std::cout << "The king is checked!" << "\n";
+
+                setInCheck(color);
+                return true;
+            }
+        }
+    }
+ 
+    for (auto cords: posbStraightCords) {
+        int cx = king_cords.first;
+        int cy = king_cords.second;
+
+        while ((cx < 7 && cx > 0) && (cy < 7 && cy > 0)) {
+            cx += cords.first;
+            cy += cords.second;
+
+            ChessPiece* curr_square_piece = getPiece(cx, cy);
+
+            if (curr_square_piece == nullptr) continue;
+
+            if (curr_square_piece->getColor() == color) break;
+
+            if (curr_square_piece->isValidMove(king_cords.first, king_cords.second)) {
+
+                std::cout << "The king is checked!" << "\n";
+
+                setInCheck(color);
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
 Board::~Board() {
