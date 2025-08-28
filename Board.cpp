@@ -116,6 +116,14 @@ void Board::populateBoard(std::string color) {
 
 }
 
+bool Board::isMoveDiagonal(int xStart, int yStart, int xEnd, int yEnd) {
+    if (std::abs(xEnd - xStart) == std::abs(yEnd - yStart)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 bool Board::isPieceInWayStraight(int xStart, int yStart, int xEnd, int yEnd, ChessPiece* piece) {
     int dx = (xEnd > xStart) ? 1 : (xEnd < xStart ? -1 : 0);
     int dy = (yEnd > yStart) ? 1 : (yEnd < yStart ? -1 : 0);
@@ -170,26 +178,13 @@ bool Board::isPieceInWayDiagonal(int xStart, int yStart, int xEnd, int yEnd, Che
 }
 
 bool Board::isPathClear(int xStart, int yStart, int xEnd, int yEnd, ChessPiece* piece) {
-    bool pieceInWayStraight;
-    bool pieceInWayDiagonal;
-    bool result;
 
-    if (piece->getName() == 'R' || piece->getName() == 'P') {
-        pieceInWayStraight = isPieceInWayStraight(xStart, yStart, xEnd, yEnd, piece);
-        return pieceInWayStraight;
-    } else if (piece->getName() == 'B') {
-        pieceInWayDiagonal = isPieceInWayDiagonal(xStart, yStart, xEnd, yEnd, piece);
-        return pieceInWayDiagonal;
-    } else if (piece->getName() == 'Q') {
-        pieceInWayStraight = isPieceInWayStraight(xStart, yStart, xEnd, yEnd, piece);
-        pieceInWayDiagonal = isPieceInWayDiagonal(xStart, yStart, xEnd, yEnd, piece);
+    bool moveDiagonal = isMoveDiagonal(xStart, yStart, xEnd, yEnd);
 
-        result = pieceInWayStraight || pieceInWayDiagonal;
+    bool pathClear = (moveDiagonal) ? isPieceInWayDiagonal(xStart, yStart, xEnd, yEnd, piece) : 
+                                      isPieceInWayStraight(xStart, yStart, xEnd, yEnd, piece);
 
-        return result;
-    }
-
-    return true;
+    return pathClear;
 }
 
 Board::~Board() {

@@ -7,16 +7,14 @@ bool Pawn::isValidMove(int x, int y) const {
     int dx = x - this->x;
     int dy = y - this->y;
 
-    if (dy != 0) return false;
+    if (dy == 0) {
+        if (color == "black") return (dx == 1 || (!hasMoved && dx == 2));
+        else return (dx == -1 || (!hasMoved && dx == -2));
+    }
 
-    if (this->color == "black") {
-
-    if (!hasMoved && dx == 2) return true;
-    if (dx == 1) return true;
-    } else {
-    
-        if (!hasMoved && dx == -2) return true;
-        if (dx == -1) return true;
+    if (abs(dy) == 1) {
+        if (color == "black") return (dx == 1);
+        else return (dx == -1);
     }
 
     return false;

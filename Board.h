@@ -39,6 +39,8 @@ public:
     bool isPathClear(int xStart, int yStart, int xEnd, int yEnd, ChessPiece* piece);
 
     void takePiece(int x, int y, Player* player1, Player* player2);
+
+    bool isMoveDiagonal(int xStart, int yStart, int xEnd, int yEnd); 
 };
 
 #endif

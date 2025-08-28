@@ -62,6 +62,12 @@ int main() {
 
             isValid = piece->isValidMove(x2, y2);
 
+            bool moveDiagonal = board.isMoveDiagonal(x1, y1, x2, y2);
+
+            if (isValid && piece->getName() == 'P' && board.getPiece(x2, y2) == nullptr && moveDiagonal) {
+                isValid = false;
+            }
+
             if (!isValid) {
                 std::cout <<"Move not valid!" << "\n";
                 continue;
